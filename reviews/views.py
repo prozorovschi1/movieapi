@@ -20,9 +20,7 @@ class MovieListCreate(generics.ListCreateAPIView):
     filterset_fields = ['title', 'release_date']
     ordering_fields = ['release_date', 'title']
     permission_classes = [IsAuthenticated]
-    
-    def get(self, request):
-        return Response({"message": "Lista de filme este protejată!"})
+
 
 class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Movie.objects.all()
