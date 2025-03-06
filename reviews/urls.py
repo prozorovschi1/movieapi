@@ -2,12 +2,12 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from .views import RegisterView, MovieListCreate, MovieDetail, ReviewListCreate, ReviewDetail, CategoryViewSet, GenreViewSet
+from .views import RegisterView, MovieListCreate, MovieDetail, ReviewListCreate, ReviewDetail, CategoryViewSet
 
 # Router pentru viewsets
 router = DefaultRouter()
 router.register(r'categories', CategoryViewSet)
-router.register(r'genres', GenreViewSet)
+
 
 urlpatterns = [
     # Rutele pentru autentificare și înregistrare
