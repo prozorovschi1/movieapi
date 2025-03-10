@@ -5,10 +5,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 
-
-# SECURITY WARNING: keep the secret key used in production secret!
 import os
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-&s^@rp-auc2-c7-j5c^9nb%kdfdsfdsfretetreuytihgfddb+dkqelku)9$prlgf9il8$e(l%')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

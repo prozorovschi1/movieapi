@@ -1,20 +1,20 @@
 from django.contrib.auth.models import User
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, filters, status, viewsets
+from rest_framework import generics, filters, status, viewsets, parsers
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.pagination import PageNumberPagination  # Import paginare
+from rest_framework.pagination import PageNumberPagination  
 
 from .models import Movie, Review, Category
 from .serializers import MovieSerializer, ReviewSerializer, CategorySerializer
 
 # Paginare
 class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 5  # Implicit 5 rezultate per pagină
+    page_size = 5  
     page_size_query_param = 'page_size'
-    max_page_size = 50  # Maxim 50 de rezultate pe pagină
+    max_page_size = 50  
 
 # Filme
 class MovieListCreate(generics.ListCreateAPIView):
@@ -22,6 +22,7 @@ class MovieListCreate(generics.ListCreateAPIView):
     serializer_class = MovieSerializer
     permission_classes = [IsAuthenticated]
     pagination_class = StandardResultsSetPagination  
+    parser_classes = [parsers.MultiPartParser, parsers.FormParser]
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter] 
     filterset_fields = ['category', 'release_date', 'average_rating']
@@ -41,14 +42,14 @@ class ReviewListCreate(generics.ListCreateAPIView):
     filterset_fields = ['movie', 'author']
     ordering_fields = ['rating']
     permission_classes = [IsAuthenticated]
-    pagination_class = StandardResultsSetPagination  # Adăugăm paginarea
+    pagination_class = StandardResultsSetPagination  
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     permission_classes = [IsAuthenticated]
 
-# inregistrare utilizatori
+
 class RegisterSerializer(ModelSerializer):
     class Meta:
         model = User
@@ -87,4 +88,4 @@ class CategoryViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['name']
-    pagination_class = StandardResultsSetPagination  # Adăugăm paginarea
+    pagination_class = StandardResultsSetPagination  

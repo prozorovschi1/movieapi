@@ -14,8 +14,10 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class MovieSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
-    reviews = ReviewSerializer(many=True, read_only=True)  # Elimină `source='reviews'`
+    reviews = ReviewSerializer(many=True, read_only=True)  
 
     class Meta:
         model = Movie
-        fields = '__all__'
+        fields = ['id', 'title', 'description', 'release_date', 'average_rating', 'category', 'image', 'reviews']
+
+        
